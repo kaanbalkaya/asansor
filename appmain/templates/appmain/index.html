@@ -1,0 +1,61 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+<strong>Anasayfa</strong>
+<br>
+<br>
+
+<span style="color:red">{{msg}}</span>
+
+<br>
+
+<form method="post">
+  {% csrf_token %}
+
+</form>
+
+
+
+<table class="books-table">
+  <tr>
+      <th>
+          <h4>Asansör Kimlik Numarası</h4>
+      </th>
+      <th>
+          <h4>Kurum</h4>
+      </th>
+      <th>
+          <h4>Açıklama</h4>
+      </th>
+
+</tr>
+
+{% if liste %}
+  {%for l in liste%}
+      <tr>
+        <td>
+             <a href="/asansor/elevator_detail/{{l.id}}">  {{l.id}}</a>
+
+        </td>
+
+        <td>
+            {{l.unit}}
+
+        </td>
+        <td>
+            {{l.description}}
+
+        </td>
+
+      </tr>
+    {%endfor%}
+  {%endif%}
+</table>
+
+
+
+
+
+
+{% endblock %}

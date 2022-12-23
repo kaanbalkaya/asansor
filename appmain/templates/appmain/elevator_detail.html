@@ -1,0 +1,103 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+</form>
+<table class="books-table">
+  <tr>
+      <th>
+          <h4>Kimlik Numarası</h4>
+      </th>
+      <th>
+          <h4>Montaj Yılı</h4>
+      </th>
+      <th>
+          <h4>Cinsi</h4>
+      </th>
+      <th>
+          <h4>Tipi</h4>
+      </th>
+      <th>
+          <h4>Açıklama</h4>
+      </th>
+      <th>
+          <h4>Güncel Dökümanlar</h4>
+      </th>
+  </tr>
+
+
+  <tr>
+  <td>
+    {{elevator.id}}
+  </td>
+  <td>
+    {{elevator.mount_year}}
+  </td>
+  <td>
+    {{elevator.kind}}
+  </td>
+  <td>
+    {{elevator.type}}
+  </td>
+
+  <td>
+    {{elevator.description}}
+  </td>
+
+  <td>
+    <table>
+      <tr>
+        <td>
+          {%if document_bakim_sozlesmesi %}
+            <a href="/asansor/document_detail/{{document_bakim_sozlesmesi.id}}">
+            {% if document_bakim_sozlesmesi.is_expired %}
+               <span style="color:red;font-weight:bold">  {{document_bakim_sozlesmesi}}</span>
+             {%else%}
+                {{document_bakim_sozlesmesi}}
+            {% endif %}
+             </a>
+          {%else%}
+            <span style="color:red;font-weight:bold"> Bakım sözleşmesi yok.</span>
+          {%endif%}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {%if document_yillik%}
+            <a href="/asansor/document_detail/{{document_yillik.id}}">
+            {% if document_yillik.is_expired %}
+               <span style="color:red;font-weight:bold">  {{document_yillik}}</span>
+             {%else%}
+                {{document_yillik}}
+            {% endif %}
+            </a>
+          {%else%}
+            <span style="color:red;font-weight:bold">Yıllık bakım dökümanı yok.</span>
+          {%endif%}
+          </td>
+      </tr>
+      <tr>
+        <td>
+          {%if document_aylik%}
+            <a href="/asansor/document_detail/{{document_aylik.id}}">
+            {% if document_aylik.is_expired %}
+               <span style="color:red;font-weight:bold">{{document_aylik}}</span>
+             {%else%}
+                {{document_aylik}}
+            {% endif %}
+            </a>
+          {%else%}
+            <span style="color:red;font-weight:bold">Aylık bakım dökümanı yok.</span>
+          {%endif%}
+        </td>
+      </tr>
+    </table>
+  </td>
+
+
+</tr>
+
+</table>
+{% endblock %}

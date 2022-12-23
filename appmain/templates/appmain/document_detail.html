@@ -1,0 +1,64 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+</form>
+<table class="books-table">
+  <tr>
+      <th>
+          <h4>Döküman Numarası</h4>
+      </th>
+      <th>
+          <h4>Döküman Tipi</h4>
+      </th>
+      <th>
+          <h4>Firma</h4>
+      </th>
+      <th>
+          <h4>Güncelleme Tarihi</h4>
+      </th>
+      <th>
+          <h4>Sona Erme Tarihi</h4>
+      </th>
+      <th>
+          <h4>Açıklama</h4>
+      </th>
+
+  </tr>
+
+
+  <tr>
+  <td>
+    {{document.id}}
+  </td>
+  <td>
+    {{document.document_type}}
+  </td>
+  <td>
+    {{document.firm}}
+  </td>
+  <td>
+    {{document.update_date}}
+  </td>
+  <td>
+    {% if document.is_expired %}
+       <span style="color:red;font-weight:bold">{{document.expire_date}}</span>
+     {%else%}
+        {{document.expire_date}}
+    {% endif %}
+
+  </td>
+
+  <td>
+    {{document.description}}
+  </td>
+
+
+
+
+</tr>
+
+</table>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends './base.html' %}
+
+{% block content %}
+<strong>Raporlar</strong>
+
+<p> <strong>{{msg}}</strong></p>
+
+<form method="post">
+  {% csrf_token %}
+  <select name="which_unit" id="which_unit">
+      <option value="all">Tüm Kurumlar</option>
+      {%for u in units%}
+        <option value="{{u.id}}">{{u}}</option>
+      {% endfor %}
+  </select>
+  <select name="which_kind" id="which_kind">
+      <option value="all">Tüm Asansörler</option>
+      {%for k in kinds%}
+        <option value="{{k.id}}">{{k}}</option>
+      {% endfor %}
+  </select>
+  <input type="checkbox" id="show_expired" name="show_expired" value="show_expired">
+  <label for="show_expired">Sadece süresi geçen dökümanları göster</label><br>
+  <input type="submit" value="Listele">
+</form>
+<br>
+
+<table class="books-table">
+  <tr>
+      <th>
+          <h4>Kimlik Numarası</h4>
+      </th>
+      <th>
+          <h4>Montaj Yılı</h4>
+      </th>
+      <th>
+          <h4>Cinsi</h4>
+      </th>
+      <th>
+          <h4>Tipi</h4>
+      </th>
+      <th>
+          <h4>Açıklama</h4>
+      </th>
+      <th>
+          <h4>Durum</h4>
+      </th>
+
+  </tr>
+  {%for elevator, has_problem in liste.items%}
+      <tr>
+        <td>
+             <a href="/asansor/elevator_detail/{{elevator.id}}">  {{elevator.id}}</a>
+        </td>
+        <td>
+          {{elevator.mount_year}}
+        </td>
+        <td>
+          {{elevator.kind}}
+        </td>
+        <td>
+          {{elevator.type}}
+        </td>
+        <td>
+          {{elevator.description}}
+        </td>
+        <td>
+            {%if has_problem%}
+               <span style="color:red;font-weight:bold">
+                 Eksik veya süresi dolmuş belge
+                </span>
+            {%else %}
+                Belgeleri tam
+            {%endif%}
+        </td>
+      </tr>
+
+  {%endfor%}
+</table>
+
+
+{% endblock %}
